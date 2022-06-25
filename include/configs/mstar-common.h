@@ -1,13 +1,6 @@
-#ifndef __CONFIG_H
-#define __CONFIG_H
-
 /*------------------------------------------------------------------------------
     Constant
 -------------------------------------------------------------------------------*/
-/* This is columbus2 hardware */
-#define CONFIG_ARCH_INFINITY3	1
-#define CONFIG_ARMCORTEXA7		/* This is an ARM V7 CPU core */
-#define CONFIG_SYS_L2CACHE_OFF		/* No L2 cache */
 /*#define CONFIG_SYS_ARCH_TIMER   1*/
 #define CONFIG_MS_PIU_TIMER   1
 #define CONFIG_AUTOBOOT_KEYED
@@ -17,138 +10,33 @@
 
 #define CONFIG_BOARD_LATE_INIT
 
-#if CONFIG_VERSION_FPGA
-#define CONFIG_SYS_HZ_CLOCK 27000000//12000000
-#define CONFIG_UART_CLOCK   27000000//12000000
-#define CONFIG_BAUDRATE	    115200 //38400
-#define CONFIG_PIUTIMER_CLOCK 27000000//12000000
-#else
-#define CONFIG_SYS_HZ_CLOCK 400000000
-#define CONFIG_UART_CLOCK   172800000
-#define CONFIG_BAUDRATE	    115200
-#define CONFIG_PIUTIMER_CLOCK 12000000
-#endif
-
-
-
-/* define baud rate */
-#define CONFIG_SYS_BAUDRATE_TABLE	{ 9600, 19200, 38400, 57600, 115200 }
-
 /*------------------------------------------------------------------------------
     Macro
 -------------------------------------------------------------------------------*/
+#define CONFIG_BOOTARGS "mem=\${osmem} console=ttyS0,115200 panic=20 root=/dev/mtdblock3 rootfstype=squashfs init=/init mtdparts=\${mtdparts}"
+#define CONFIG_BOOTCOMMAND "setenv setargs setenv bootargs ${bootargs}; run setargs; sf probe 0; sf read ${baseaddr} 0x50000 0x200000; bootm ${baseaddr}; reset"
 
 /* boot delay time */
 #define CONFIG_BOOTDELAY	0
 #define CONFIG_ZERO_BOOTDELAY_CHECK
 
-/*
-#define CONFIG_MS_ANDROID_RECOVERY  1
-#define CONFIG_MS_DISPLAY   1
-#define CONFIG_MS_SHOW_LOGO 1
-#define CONFIG_MS_ISP       1
-#define CONFIG_MS_PIUTIMER 1
-*/
+#define CONFIG_HUSH_PARSER 1
 
-#define CONFIG_SKIP_LOWLEVEL_INIT
-/*#define CONFIG_DISPLAY_BOARDINFO *//*for checkboard*/
-/*
- * Size of malloc() pool
- */
-#define CONFIG_SYS_MALLOC_LEN	    (CONFIG_ENV_SIZE + 4*1024*1024)/* (CONFIG_ENV_SIZE + 512*1024) */
-
-/*
- * Miscellaneous configurable options
- */
 #define CONFIG_SYS_LONGHELP	            /* undef to save memory     */
-#define CONFIG_SYS_PROMPT	"MStar # "	/* Monitor Command Prompt   */
+#define CONFIG_SYS_PROMPT	"OpenIPC # "	/* Monitor Command Prompt   */
 #define CONFIG_SYS_CBSIZE	256		        /* Console I/O Buffer Size  */
 
 /* Print Buffer Size */
 #define CONFIG_SYS_PBSIZE	        (CONFIG_SYS_CBSIZE+sizeof(CONFIG_SYS_PROMPT)+16)
-#define CONFIG_SYS_MAXARGS	        32		    /* max number of command args   */
+#define CONFIG_SYS_MAXARGS	        64		    /* max number of command args   */
 #define CONFIG_SYS_BARGSIZE	    CONFIG_SYS_CBSIZE	/* Boot Argument Buffer Size    */
-
-/*
- * Stack sizes
- *
- * The stack sizes are set up in start.S using the settings below
- */
-#define CONFIG_STACKSIZE	    (4*1024*1024)  /* regular stack */
-
-/*
- * Physical Memory Map
- */
-#define CONFIG_NR_DRAM_BANKS	1   /* we have 1 bank of DRAM */
-#define PHYS_SDRAM_1		0x20000000	/* SDRAM Bank #1 */
-#define PHYS_SDRAM_1_SIZE	0x08000000	/* 128 MB */
-
-/*Enable watchdog*/
-/*#define CONFIG_HW_WATCHDOG 1*/
-#ifdef CONFIG_HW_WATCHDOG
-#define CONFIG_HW_WATCHDOG_TIMEOUT_S	60
-#endif
-
-
-
-/* following is a multiple DRAM bank sample*/
-/*
- * Physical Memory Map
- */
-/* #define CONFIG_NR_DRAM_BANKS	4			// we have 2 banks of DRAM
- * #define PHYS_SDRAM_1			0xa0000000	// SDRAM Bank #1
- * #define PHYS_SDRAM_1_SIZE		0x04000000	// 64 MB
- * #define PHYS_SDRAM_2			0xa4000000	// SDRAM Bank #2
- * #define PHYS_SDRAM_2_SIZE		0x00000000	// 0 MB
- * #define PHYS_SDRAM_3			0xa8000000	// SDRAM Bank #3
- * #define PHYS_SDRAM_3_SIZE		0x00000000	// 0 MB
- * #define PHYS_SDRAM_4			0xac000000	// SDRAM Bank #4
- * #define PHYS_SDRAM_4_SIZE		0x00000000	// 0 MB
- */
-
-
-#define CONFIG_SYS_MEMTEST_START	0x20000000	/* memtest works on	*/
-#define CONFIG_SYS_MEMTEST_END		0x24000000	/* 0 ... 64 MB in DRAM	*/
-
-#define CONFIG_SYS_TEXT_BASE	0x23E00000
-#define CONFIG_SYS_SDRAM_BASE	PHYS_SDRAM_1
-#define CONFIG_SYS_INIT_SP_ADDR		(CONFIG_SYS_TEXT_BASE  - GENERATED_GBL_DATA_SIZE)
-
-#define CONFIG_UBOOT_RAM_SIZE   0x04000000 // let us to use only 64MB for uboot
-
-
-
-/* RAM base address */
-#define RAM_START_ADDR          0x20000000
-
-/* RAM size */
-#define RAM_SIZE		        PHYS_SDRAM_1_SIZE
-/* The address used to save tag list used when kernel is booting */
-#define BOOT_PARAMS 	        (RAM_START_ADDR)
-#define BOOT_PARAMS_LEN         0x2000
-
-/* CFG load address */
-#define CONFIG_SYS_LOAD_ADDR	        (BOOT_PARAMS+BOOT_PARAMS_LEN+0x4000)
 
 #define CONFIG_CMDLINE_TAG       1    /* enable passing of ATAGs */
 #define CONFIG_SETUP_MEMORY_TAGS 1
 #define CONFIG_INITRD_TAG        1
 
-/* kernel starting address */
-#define KERNEL_RAM_BASE	        CFG_LOAD_ADDR
-
-/* Which block used to save IPL, u-boot and kernel images */
-#define IPL_NAND_BLOCK      0
-#define UBOOT_NAND_BLOCK    1
-#define KERNEL_NAND_BLOCK   2
-
-
 #define CONFIG_CMDLINE_EDITING 1
 #define CONFIG_AUTO_COMPLETE
-
-/* boot time analysis*/
-#define CONFIG_BOOT_TIME_ANALYSIS			0
-#define CONFIG_BOOT_TIME_ANALYSIS_USE_RTC	0
 
 #define CONFIG_SYS_NO_FLASH 			   1
 
@@ -156,28 +44,41 @@
 #define CONFIG_CMD_SF
 #ifdef CONFIG_MS_SAVE_ENV_IN_ISP_FLASH
 #define CONFIG_ENV_IS_IN_SPI_FLASH
-#define CONFIG_ENV_SECT_SIZE    0x1000
-#define CONFIG_ENV_SIZE         0x1000	/* Total Size of Environment Sector */
+#define CONFIG_ENV_SECT_SIZE    0x10000
+#define CONFIG_ENV_SIZE         0x10000	/* Total Size of Environment Sector */
 /* bottom 4KB of available space in Uboot */
 /* 0x40000 reserved for UBoot, 0x40000 maximum storage size of uboot */
-#define CONFIG_ENV_OFFSET       0x4F000
+#define CONFIG_ENV_OFFSET       0x40000
 
 #endif
 
+#define CONFIG_EXTRA_ENV_SETTINGS \
+    "baseaddr=0x21000000\0" \
+    "uknor8m=mw.b ${baseaddr} ff 1000000; tftpboot ${baseaddr} uImage.${soc} && sf probe 0; sf erase 0x50000 0x200000; sf write ${baseaddr} 0x50000 ${filesize}\0" \
+    "uknor16m=mw.b ${baseaddr} ff 1000000; tftpboot ${baseaddr} uImage.${soc} && sf probe 0; sf erase 0x50000 0x300000; sf write ${baseaddr} 0x50000 ${filesize}\0" \
+    "urnor8m=mw.b ${baseaddr} ff 1000000; tftpboot ${baseaddr} rootfs.squashfs.${soc} && sf probe 0; sf erase 0x250000 0x500000; sf write ${baseaddr} 0x250000 ${filesize}\0" \
+    "urnor16m=mw.b ${baseaddr} ff 1000000; tftpboot ${baseaddr} rootfs.squashfs.${soc} && sf probe 0; sf erase 0x350000 0xa00000; sf write ${baseaddr} 0x350000 ${filesize}\0" \
+    "uknand=mw.b ${baseaddr} ff 1000000; tftpboot ${baseaddr} uImage.${soc} && nand erase 0x100000 0x300000; nand write ${baseaddr} 0x100000 0x300000\0" \
+    "urnand=mw.b ${baseaddr} ff 1000000; tftpboot ${baseaddr} rootfs.ubi.${soc} && nand erase 0x400000 0x7c00000; nand write ${baseaddr} 0x400000 ${filesize}\0" \
+    "mtdparts=NOR_FLASH:256k(boot),64k(env),2048k(kernel),5120k(rootfs),-(rootfs_data)\0" \
+    "mtdpartsubi=setenv mtdparts nand:256k(boot),768k(wtf),3072k(kernel),-(ubi)\0" \
+    "mtdpartsnand=setenv mtdparts nand:256k(boot),768k(wtf),3072k(kernel),10240k(rootfs),-(rootfs_data)\0" \
+    "mtdpartsnor8m=setenv mtdparts NOR_FLASH:256k(boot),64k(env),2048k(kernel),5120k(rootfs),-(rootfs_data)\0" \
+    "mtdpartsnor16m=setenv mtdparts NOR_FLASH:256k(boot),64k(env),3072k(kernel),10240k(rootfs),-(rootfs_data)\0" \
+    "nfsroot=/srv/nfs/msc313e\0" \
+    "bootargsnfs=mem=\${osmem} console=ttyS0,115200 panic=20 root=/dev/nfs rootfstype=nfs ip=${ipaddr}:::255.255.255.0::eth0 nfsroot=${serverip}:${nfsroot},v3,nolock rw\0" \
+    "bootargsubi=mem=\${osmem} console=ttyS0,115200 panic=20 init=/init root=ubi0:rootfs rootfstype=ubifs ubi.mtd=3,2048 mtdparts=\${mtdparts}\0" \
+    "bootnfs=setenv setargs setenv bootargs ${bootargsnfs}; run setargs; tftpboot ${baseaddr} uImage.${soc}; bootm ${baseaddr}\0" \
+    "bootcmdnand=setenv setargs setenv bootargs ${bootargs}; run setargs; nand read ${baseaddr} 0x100000 0x300000; bootm ${baseaddr}\0" \
+    "bootcmdubi=setenv setargs setenv bootargs ${bootargsubi}; run setargs; nand read ${baseaddr} 0x100000 0x300000; bootm ${baseaddr}\0" \
+    "bootcmdnor=setenv setargs setenv bootargs ${bootargs}; run setargs; sf probe 0; sf read ${baseaddr} 0x50000 0x200000; bootm ${baseaddr}\0" \
+    "setnand=run mtdpartsubi; setenv bootcmd ${bootcmdubi}; saveenv; reset\0" \
+    "setnor8m=run mtdpartsnor8m; setenv bootcmd ${bootcmdnor}; saveenv; reset\0" \
+    "setnor16m=run mtdpartsnor16m; setenv bootcmd ${bootcmdnor}; saveenv; reset\0" \
+    "osmem=32M\0" \
+    "soc=msc313e"
+
 #endif
-
-
-/*
- * File system, NAND flash, SD/MMC
- */
-
-
-
-
-/*
- * FLASH driver setup
- */
-
 
 #ifdef CONFIG_MS_SDMMC
 #define CONFIG_CMD_FAT
@@ -225,23 +126,12 @@
 
 #ifdef CONFIG_MS_NAND
 
-/*
-#ifndef CONFIG_ENV_IS_IN_SPI_FLASH
-#define CONFIG_ENV_IS_IN_NAND
-#define CONFIG_ENV_OFFSET_OOB
-#endif
-
-*/
-
 #if defined(CONFIG_MS_SAVE_ENV_IN_NAND_FLASH)
 #define CONFIG_ENV_IS_IN_NAND
 #define CONFIG_ENV_OFFSET       CONFIG_MSTAR_ENV_NAND_OFFSET
 #define CONFIG_MSTAR_ENV_NAND_OFFSET ms_nand_env_offset
 #define CONFIG_ENV_SIZE         0x00020000
 #endif
-
-
-/* #define ENABLE_NAND_RIU_MODE 1 */
 
 #define CONFIG_CMD_UBI
 /* #define CONFIG_CMD_UBIFS */
@@ -323,25 +213,6 @@
 #endif
 
 
-#endif	/* __CONFIG_H */
-
-
-/*following config should be considered to be removed after confirmed*/
-
-/* #define CONFIG_SKIP_RELOCATE_UBOOT dropped after uboot 201012 */
-/*
-#undef CONFIG_USE_IRQ	// we don't need IRQ/FIQ stuff
-*/
-/*#define KERNEL_IMAGE_SIZE       0x1000000	// 10M  kernel image size */
-
-/*  move to cedric_defconfig
- *
- * 	#define CONFIG_MS_SDMMC     1
- *	#define CONFIG_MS_EMMC      1
- *  #define CONFIG_MS_NAND      1
- *
- */
-
  /* Ethernet configuration */
 #ifdef CONFIG_MS_EMAC
 #define CONFIG_MINIUBOOT
@@ -389,4 +260,7 @@
 /* SENSOR */
 #define CONFIG_MS_SRCFG
 
-#include <configs/mstar-common.h>
+#define CONFIG_NETMASK 255.255.255.0
+#define CONFIG_GATEWAYIP 192.168.1.1
+#define CONFIG_SERVERIP 192.168.1.1
+#define CONFIG_IPADDR 192.168.1.10
