@@ -1,5 +1,5 @@
 # u-boot-msc313e
-U-Boot for msc313e SoC
+U-Boot for msc313e group SoC
 
 ## Building
 ```export ARCH=arm```
