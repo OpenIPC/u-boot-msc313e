@@ -1,0 +1,69 @@
+config MS_ISP_FLASH
+    bool "MSTAR ISP NOR FLASH"
+
+config MS_SAVE_ENV_IN_ISP_FLASH
+    bool "Save environment to ISP NOR FLASH"
+    depends on MS_ISP_FLASH
+
+config MS_MTD_ISP_FLASH
+    bool "MTD device for ISP NOR FLASH"
+    depends on MS_ISP_FLASH
+
+config MS_PARTITION
+    bool 'Enable Mstar partition support'
+    depends on MS_ISP_FLASH
+
+config MS_SDMMC
+    bool 'MSTAR SDMMC'
+
+config MS_EMMC
+    bool 'MSTAR eMMC'
+
+config MS_GPIO
+    bool 'MSTAR Gpio'
+    default y
+
+config MS_NAND
+    bool 'MSTAR NAND'
+
+config MS_SAVE_ENV_IN_NAND_FLASH
+    bool "Save environment to NAND FLASH"
+    depends on MS_NAND
+
+config MS_USB
+    bool 'MSTAR USB'
+
+config MS_EMAC
+    select CMD_NET
+    bool 'MSTAR EMAC'
+
+config ETHERNET_ALBANY
+    bool "Supply to internel PHY"
+    depends on MS_EMAC
+
+config ENABLE_FIRST_EHC
+    bool 'Enable 1st EHC'
+    depends on MS_USB
+
+config ENABLE_SECOND_EHC
+    bool 'Enable 2nd EHC'
+    depends on MS_USB
+
+config ENABLE_THIRD_EHC
+    bool 'Enable 3rd EHC'
+    depends on MS_USB
+    default y
+
+config MS_ENABLE_USB_LAN_MODULE
+    bool 'Enable USB lan module'
+    depends on MS_USB
+
+config MS_AESDMA
+    bool 'Enable AESDMA'
+
+config MS_SPINAND
+    bool "MSTAR SPINAND"
+
+config MS_SAVE_ENV_IN_NAND_FLASH
+    bool "Save environment to NAND FLASH"
+    depends on MS_SPINAND
