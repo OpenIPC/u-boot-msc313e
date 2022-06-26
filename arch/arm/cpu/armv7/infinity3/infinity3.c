@@ -56,8 +56,10 @@ int arch_cpu_init(void)
 // we borrow the DRAN init to do the devinfo setting...
 int dram_init(void)
 {
-    gd->ram_size=CONFIG_UBOOT_RAM_SIZE;
-
+    //gd->ram_size=CONFIG_UBOOT_RAM_SIZE;
+    gd->ram_size=gd->ram_size = get_ram_size(
+			(void *)CONFIG_SYS_SDRAM_BASE,
+			PHYS_SDRAM_1_SIZE);
     return 0;
 }
 
@@ -68,6 +70,8 @@ DEVINFO_CHIP_TYPE ms_check_chip(void)
 
 	if (chipType == 0x6000)
 		return DEVINFO_313E;
+	else if (chipType == 0x7000)
+		return DEVINFO_316DC;
 	else if (chipType == 0x8000)
 		return DEVINFO_318;
 	else if (chipType == 0x9000)
@@ -127,16 +131,25 @@ int checkboard(void)
 		switch (ms_check_chip())
 		{
 			case DEVINFO_313E:
-				printf("DEVINFO: 313E\n");
+				printf("SOC: MSC313E\n");
+				setenv("soc","msc313e");
+				setenv("totalmem","64M");
+				break;
+			case DEVINFO_316DC:
+				printf("SOC: MSC316DC\n");
+				setenv("soc","msc316dc");
+				setenv("totalmem","128M");
 				break;
 			case DEVINFO_318:
-				printf("DEVINFO: 318\n");
+				printf("SOC: MSC318\n");
+				setenv("soc","msc318");
+				setenv("totalmem","128M");
 				break;
 			case DEVINFO_NON:
-				printf("DEVINFO: NON\n");
+				printf("SOC: UNKNOWN\n");
 				break;
 			default:
-				printf("DEVINFO:ERROR\n");
+				printf("SOC: ERROR\n");
 		}
 
 
@@ -284,6 +297,7 @@ int board_late_init(void)
     }
     printf("*******************************************\n");
     */
+    checkboard();
     return 0;
 }
 #endif
