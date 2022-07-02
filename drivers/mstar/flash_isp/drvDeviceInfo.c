@@ -1261,4 +1261,7 @@ hal_SERFLASH_t _hal_SERFLASH_table[] =   // Need to Add more sample for robust
 	{ FLASH_IC_IC25LP128, 	MID_IC, 	0x60,	0x18,	_pstWriteProtectTable_IC25LP128,	  NULL, 					  0x1000000,  256,	  SIZE_64KB,  256,	  50,	  BITS(5:2, 0x0F),	  ISP_DEV_NEXTFLASH,	  ISP_SPI_ENDIAN_LITTLE, {E_SPI_86M  , E_DUAL_AD_MODE}, TRUE,  TRUE },//leaf add
     { FLASH_IC_ZB25Q128,    MID_ST,     0x70,   0x18,   _pstWriteProtectTable_ZB25Q128,       NULL,                       0x1000000,  256,    SIZE_64KB,  256,    50,     BITS(5:2, 0x0F),    ISP_DEV_ST,             ISP_SPI_ENDIAN_LITTLE, {E_SPI_86M  , E_DUAL_AD_MODE}, TRUE,  TRUE },
     { FLASH_IC_ZB25Q64 ,    MID_EON,    0x70,   0x17,   _pstWriteProtectTable_ZB25Q64 ,       NULL,                      0x800000,    128,    SIZE_64KB,  256,    50,     BITS(5:2, 0x0F),    ISP_DEV_PMC,            ISP_SPI_ENDIAN_LITTLE, {E_SPI_86M  , E_DUAL_AD_MODE}, TRUE,  TRUE },
+    { FLASH_IC_XM25Q128,    0x20,     0x70,   0x18,   _pstWriteProtectTable_ZB25Q128,       NULL,                       0x1000000,  256,    SIZE_64KB,  256,    50,     BITS(5:2, 0x0F),    ISP_DEV_ST,             ISP_SPI_ENDIAN_LITTLE, {E_SPI_86M  , E_DUAL_AD_MODE}, TRUE,  TRUE },
+    { FLASH_IC_XM25Q64 ,    0x20,    0x70,   0x17,   _pstWriteProtectTable_ZB25Q64 ,       NULL,                      0x800000,    128,    SIZE_64KB,  256,    50,     BITS(5:2, 0x0F),    ISP_DEV_PMC,            ISP_SPI_ENDIAN_LITTLE, {E_SPI_86M  , E_DUAL_AD_MODE}, TRUE,  TRUE },
+
 };

@@ -143,6 +143,10 @@
 #define FLASH_IC_ZB25Q64        0x1002UL      // 8M
 #define FLASH_IC_ZB25Q128       0x1003UL      // 16M
 
+//XMC
+#define FLASH_IC_XM25Q64        0x1002UL      // 8M
+#define FLASH_IC_XM25Q128       0x1003UL      // 16M
+
 // Flash Manufacture ID
 #define MID_MXIC                0xC2UL
 #define MID_WB                  0xEFUL
